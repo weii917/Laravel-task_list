@@ -123,6 +123,13 @@ $task->update( $request->validated());
  })->name('tasks.update');
 // end 編輯任務
  
+Route::delete('/tasks/{task}',function(Task $task){
+    $task->delete();
+    return redirect()->route('tasks.index')
+    ->with('success','Task deleted successfully!');
+})->name('tasks.destroy');
+
+// test how to use route
 // Route::get('/xxx', function () {
 //     return 'Hello';
 // })->name('hello');
