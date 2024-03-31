@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -75,9 +75,9 @@ Route::view('/tasks/create','create')
 // end顯示create
 
 // start edit get資料顯示編輯頁面，帶有此id顯示此id的資料
-Route::get('/tasks/{id}/edit', function ($id) {
+Route::get('/tasks/{task}/edit', function (Task $task) {
     return view('edit',[
-      'task' => Task::findOrFail($id)
+      'task' => $task
     ]);
 })->name('tasks.edit');
 // end get資料顯示編輯頁面
@@ -85,50 +85,40 @@ Route::get('/tasks/{id}/edit', function ($id) {
 // start點擊個別任務顯示完整資料
 // 根據url的id找到資料顯示，在show.blade得到task可以顯示那筆資料
 // 如果沒有id會顯示404的畫面
-Route::get('/tasks/{id}', function ($id) {
+Route::get('/tasks/{task}', function (Task $task) {
     return view('show',[
-      'task' => Task::findOrFail($id)
+      'task' => $task
     ]);
 })->name('tasks.show');
 // end點擊個別任務顯示完整資料
 
 
 // start 新增任務 post來的資料會驗證才存進$data
-Route::post('/tasks',function(Request $request){
- $data = $request->validate([
-  'title'=> 'required|max:255',
-  'description'=>'required',
-  'long_description'=>'required'
- ]);
+Route::post('/tasks',function(TaskRequest $request){
+//  $data = $request->validated();
+//  $task = new Task;
+//  $task->title= $data['title'];
+//  $task->description= $data['description'];
+//  $task->long_description= $data['long_description'];
+//  $task->save();
+ $task = Task::create($request->validated());
 
- $task = new Task;
- $task->title= $data['title'];
- $task->description= $data['description'];
- $task->long_description= $data['long_description'];
-
- $task->save();
 //  當送出存進資料庫後會直接到show.blade.php的頁面帶有此任務id
- return redirect()->route('tasks.show',['id'=> $task->id])
+ return redirect()->route('tasks.show',['task'=> $task->id])
       ->with('success','Task created successfully!');
 })->name('tasks.store');
 // end 新增任務
 
 // start 編輯任務 post來的資料會驗證才存進$data
-Route::put('/tasks/{id}',function($id, Request $request){
-  $data = $request->validate([
-   'title'=> 'required|max:255',
-   'description'=>'required',
-   'long_description'=>'required'
-  ]);
- 
-  $task =Task::findOrFail($id);
-  $task->title= $data['title'];
-  $task->description= $data['description'];
-  $task->long_description= $data['long_description'];
- 
-  $task->save();
+Route::put('/tasks/{task}',function(Task $task, TaskRequest $request){
+//   $data = $request->validated();
+//   $task->title= $data['title'];
+//   $task->description= $data['description'];
+//   $task->long_description= $data['long_description'];
+//   $task->save();
+$task->update( $request->validated());
  //  當送出存進資料庫後會直接到show.blade.php的頁面帶有此任務id
-  return redirect()->route('tasks.show',['id'=> $task->id])
+  return redirect()->route('tasks.show',['task'=> $task->id])
        ->with('success','Task updated successfully!');
  })->name('tasks.update');
 // end 編輯任務

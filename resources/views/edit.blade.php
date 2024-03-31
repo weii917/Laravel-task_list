@@ -13,7 +13,7 @@
 @section('content')
     {{-- $errors 變數是一個集合，它包含了所有驗證失敗的字段及其對應的錯誤消息 --}}
     {{-- {{ $errors }} --}}
-    <form action="{{ route('tasks.update', ['id' => $task->id]) }}" method="post">
+    <form action="{{ route('tasks.update', ['task' => $task->id]) }}" method="post">
         @csrf
         @method('PUT')
         <div>
