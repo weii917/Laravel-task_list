@@ -64,7 +64,7 @@ Route::get('/',function(){
 // start 首頁顯示每一筆資料
 Route::get('/tasks', function () {
     return view('index',[
-        'tasks' => Task::latest()->get()
+        'tasks' => Task::latest()->paginate(10)
     ]);
 })->name('tasks.index');
 // end首頁顯示
@@ -93,7 +93,8 @@ Route::get('/tasks/{task}', function (Task $task) {
 // end點擊個別任務顯示完整資料
 
 
-// start 新增任務 post來的資料會驗證才存進$data
+// start 新增任務 post來的資料會驗證才存進$data改成，一行直接存進$task
+// 要求驗證另外獨立出來到TaskRequest.php，只要用->去執行驗證
 Route::post('/tasks',function(TaskRequest $request){
 //  $data = $request->validated();
 //  $task = new Task;
@@ -128,6 +129,12 @@ Route::delete('/tasks/{task}',function(Task $task){
     return redirect()->route('tasks.index')
     ->with('success','Task deleted successfully!');
 })->name('tasks.destroy');
+
+Route::put('tasks/{task}/toggle-complete',function(Task $task){
+  
+    $task->toggleComplete();
+    return redirect()->back()->with('success','Task updated successfully!');
+})->name('tasks.toggle-complete');
 
 // test how to use route
 // Route::get('/xxx', function () {
