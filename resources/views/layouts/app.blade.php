@@ -12,14 +12,15 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- tailwindcss --}}
     <script src="https://cdn.tailwindcss.com"></script>
-
+    {{-- alpinejs --}}
+    <script src="//unpkg.com/alpinejs" defer></script>
     {{-- blade-formatter-disable  --}}
     <style type="text/tailwindcss">
-    .btn{
+    .cancel-link,.btn{
         @apply rounded-md px-2 py-1 text-center font-medium shadow-sm ring-1 ring-neutral-700 hover:bg-slate-50 text-slate-700 
     }
 
-    .link{
+    .add-btn,.add-link,.back-btn{
         @apply rounded-md px-2 py-1 ring-1 ring-slate-700/10 font-medium text-white bg-neutral-700 hover:bg-neutral-600
     }
 
@@ -41,13 +42,27 @@
 </head>
 
 <body
-    class="container mx-auto mt-10 mb-10 max-w-lg bg-[url('https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-no-repeat bg-center bg-cover bg-opacity-50">
+    class="container mx-auto mt-20 max-w-xl bg-[url('https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?q=3000&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-no-repeat bg-auto bg-center bg-opacity-50">
     <h1 class="text-2xl mb-4">@yield('title')</h1>
-    <div>
-        @if (session()->has('success'))
-            <div>{{ session('success') }}</div>
-        @endif
 
+    <div x-data="{ flash: true }">
+        @if (session()->has('success'))
+            <div x-show="flash"
+                class="relative mb-10 rounded border-yellow-400 bg-yellow-100 px-4 py-3 text-lg text-yellow-700"
+                role="alert">
+                <strong class="font-bold">Success!</strong>
+                <div>
+                    <div>{{ session('success') }}</div>
+                </div>
+
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        @click="flash = false" stroke="currentColor" class="h-6 w-6 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </span>
+            </div>
+        @endif
         @yield('content')
     </div>
 </body>

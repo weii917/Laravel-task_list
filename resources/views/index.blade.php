@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'The List of my tasks')
+@section('title', '待辦事項')
 
 @section('content')
     <nav class="mb-4">
-        <a href="{{ route('tasks.create') }}" class="link">
+        <a href="{{ route('tasks.create') }}" class="add-link">
             Add Task
         </a>
     </nav>

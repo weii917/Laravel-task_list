@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', isset($task) ? 'Edit Task' : 'Add Task')
+@section('title', isset($task) ? '編輯事項' : '新增事項')
 
 
 
@@ -39,14 +39,14 @@
         </div>
 
         <div class="flex gap-2 items-center">
-            <button type="submit" class="btn">
+            <button type="submit" class="add-btn">
                 @isset($task)
                     Update Task
                 @else
                     Add Task
                 @endisset
             </button>
-            <a href="{{ route('tasks.index') }}" class="link">Cancel</a>
+            <a href="{{ route('tasks.index') }}" class="cancel-link">Cancel</a>
         </div>
     </form>
 

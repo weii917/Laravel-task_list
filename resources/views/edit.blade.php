@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Task')
+@section('title', '編輯事項')
 
 
 @section('content')

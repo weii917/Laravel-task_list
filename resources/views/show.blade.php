@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="mb-4">
-        <a href="{{ route('tasks.index') }}" class="link">
+        <a href="{{ route('tasks.index') }}" class="back-btn">
             <i class="fa-solid fa-right-to-bracket"></i> Go back Home
         </a>
     </div>
