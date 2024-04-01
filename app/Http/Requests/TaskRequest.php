@@ -27,4 +27,15 @@ class TaskRequest extends FormRequest
             'long_description'=>'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => '*標題不能為空',
+            'title.max' => '*標題不能超過255個字符',
+            'description.required' => '*描述不能為空',
+            'long_description.required' => '*詳細描述不能為空',
+        ];
+    }
+
 }
