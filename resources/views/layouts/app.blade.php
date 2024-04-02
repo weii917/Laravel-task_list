@@ -41,29 +41,31 @@
     @yield('styles')
 </head>
 
-<body
-    class="container mx-auto mt-20 max-w-xl bg-[url('https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?q=3000&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-no-repeat bg-auto bg-center bg-opacity-50">
-    <h1 class="text-2xl mb-4">@yield('title')</h1>
+<body style="background-image: url('{{ asset('img/task-img.jpg') }}')"
+    class="container mx-auto mt-20 max-w-xl bg-[url(img/task-img.jpg)] bg-no-repeat bg-auto bg-center bg-opacity-50">
+    <div class="bg-img">
+        <h1 class="text-2xl mb-4">@yield('title')</h1>
 
-    <div x-data="{ flash: true }">
-        @if (session()->has('success'))
-            <div x-show="flash"
-                class="relative mb-10 rounded border-yellow-400 bg-yellow-100 px-4 py-3 text-lg text-yellow-700"
-                role="alert">
-                <strong class="font-bold">Success!</strong>
-                <div>
-                    <div>{{ session('success') }}</div>
+        <div x-data="{ flash: true }">
+            @if (session()->has('success'))
+                <div x-show="flash"
+                    class="relative mb-10 rounded border-yellow-400 bg-yellow-100 px-4 py-3 text-lg text-yellow-700"
+                    role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <div>
+                        <div>{{ session('success') }}</div>
+                    </div>
+
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            @click="flash = false" stroke="currentColor" class="h-6 w-6 cursor-pointer">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </span>
                 </div>
-
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        @click="flash = false" stroke="currentColor" class="h-6 w-6 cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </span>
-            </div>
-        @endif
-        @yield('content')
+            @endif
+            @yield('content')
+        </div>
     </div>
 </body>
 
